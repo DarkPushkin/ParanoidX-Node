@@ -1,0 +1,114 @@
+# Go
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+*.test
+*.out
+*.test.exe
+/vendor/
+/go.work
+/go.work.sum
+
+# Go binary
+simplex-node
+banknote-press
+simplex-bridge
+
+# Data dir
+.local/
+.local/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# Docker state
+docker/smp_state/
+docker/xftp_state/
+# docker/coturn/ вне git: там конфиг с TURN-паролем и TLS-ключи.
+# Но ШАБЛОН конфига нужен в репозитории — по нему установщик собирает
+# рабочий turnserver.conf со свежим секретом (deploy/px-docker.sh).
+docker/coturn/*
+!docker/coturn/turnserver.conf.template
+docker/addresses.json
+
+# ── Приватные ключи и сертификаты ───────────────────────────────────────────
+# ВСЕ .key приватные по определению. Публичные .crt нужны для проверки
+# подписи, поэтому остаются в репозитории.
+*.key
+docker/smp_configs/ca.srl
+docker/smp_configs/fingerprint
+docker/xftp_configs/ca.srl
+docker/xftp_configs/fingerprint
+install-pack/docker/smp_configs/ca.srl
+install-pack/docker/smp_configs/fingerprint
+install-pack/docker/xftp_configs/ca.srl
+install-pack/docker/xftp_configs/fingerprint
+
+# Скрытые сервисы Tor: приватный ключ — это ДОСТУП к ноде. Публичный
+# ключ и hostname безопасны и остаются в репозитории, чтобы адреса
+# были видны в коде и в логах установки.
+docker/tor/hidden_services/*/hs_ed25519_secret_key
+install-pack/docker/tor/hidden_services/*/hs_ed25519_secret_key
+
+# Токены и учётные данные
+Gemma4Token
+*Token
+*.token
+bosskeys.txt
+genkey
+
+# Секреты v2ray/xray
+docker/v2ray/certs/
+install-pack/xray/config.json
+
+# Dart/Flutter
+.dart_tool/
+.packages
+.pub/
+build/
+*.lock
+# ...кроме pubspec.lock: для Flutter-ПРИЛОЖЕНИЙ (не пакетов) lock-файл
+# обязателен в git — он фиксирует точные версии зависимостей, и без него
+# клон собирает другие версии, чем проверенная сборка. Для библиотек
+# (apps/shared/*) lock не коммитится, там версии задаёт корневой lock
+# приложения. Порядок правил важен: negate должен идти ПОСЛЕ *.lock.
+!apps/*/pubspec.lock
+apps/**/.packages
+apps/**/.dart_tool/
+apps/**/build/
+.flutter-plugins
+.flutter-plugins-dependencies
+
+# Config with secrets
+simplex-node.json
+*.token
+*.chat
+.env
+
+# Backups
+A1-backups/
+
+# Node (opencode-config-backup)
+node_modules/
+opencode-config-backup/
+
+# Sensitive / build-artifacts
+bosskeys.txt
+genkey
+
+# Собранный бинарник ноды — 20 МБ, собирается из исходников
+/ParanoidX
+
+# Скомпилированный Python — мусор, воспроизводится запуском
+__pycache__/
+*.pyc
